@@ -2,13 +2,12 @@
     <div style="display: flex; width:750px; margin-top: 15px;">
         <div>
             <div style="width: 200px; margin-left: 30px;">
-                <div style="margin-bottom: 5px;">전체 연성 횟수 입력</div>
-                <div style="margin-bottom: 5px;">
-                    <input type="number" style="width: 80px; margin-right: 10px;" v-model="inputCount" v-bind:disabled="isInputDisabled">
-                    <button type="button" class="btn btn-primary" @click="inputCountOk()">시작</button>
+                <div style="margin-bottom: 5px;">총 연성 횟수
+                    <input type="number" style="width: 50px; margin-right: 10px;" v-model="inputCount" v-bind:disabled="isInputDisabled">
                 </div>
-                <div style="text-align: center;">
-                    <button type="button" class="btn btn-primary" @click="resetElixir()">초기화</button>
+                <div style="height: 80px;">
+                    <button type="button" class="btn btn-primary" style="margin-right: 5px;" @click="resetElixir()">초기화</button>
+                    <button type="button" class="btn btn-primary" @click="elixirStart()">시작</button>
                 </div>
             </div>
             <div style="text-align: center;">
@@ -101,7 +100,7 @@ export default {
         };
     },
     methods: {
-        inputCountOk() {
+        elixirStart() {
             this.isInputDisabled = true;
             this.list = []
             for(let i = this.inputCount; i>-this.maxAddDuctilityCount; i--) {
@@ -129,7 +128,6 @@ export default {
         },
         resetElixir() {
             this.isInputDisabled = false;
-            this.inputCount = 14;
             this.list = []
             for(let i = this.inputCount; i>-this.maxAddDuctilityCount; i--) {
                 this.list.push(i);
@@ -169,7 +167,7 @@ export default {
             this.undoClickedCount = this.undoClickedCount+1;
             this.elixirDto.ductilityCount = this.elixirDto.ductilityCount - 1;
             if(this.elixirDto.ductilityCount == 0) {
-               this.inputCountOk();
+               this.elixirStart();
             } else {
                 this.elixirDto.selectWisePerson = Object.keys(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount])[0];
                 this.elixirDto.wisePersons = this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount][this.elixirDto.selectWisePerson];
