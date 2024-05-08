@@ -5,10 +5,10 @@
                 <div style="margin-bottom: 5px;">전체 연성 횟수 입력</div>
                 <div style="margin-bottom: 5px;">
                     <input type="number" style="width: 80px; margin-right: 10px;" v-model="inputCount" v-bind:disabled="inputDisabled">
-                    <button type="button" class="btn btn-primary" @click="inputCountOk">확인</button>
+                    <button type="button" class="btn btn-primary" @click="inputCountOk()">확인</button>
                 </div>
                 <div style="text-align: center;">
-                    <button type="button" class="btn btn-primary" @click="resetElixir">초기화</button>
+                    <button type="button" class="btn btn-primary" @click="resetElixir()">초기화</button>
                 </div>
             </div>
             <div style="text-align: center;">
@@ -73,14 +73,15 @@ export default {
     props: {},
     data() {
         return {
+            maxAddDuctilityCount: 2,
             inputCount: 14,
             list: [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1],
             inputDisabled: false,
             elixirDto: {
                 wisePersons: {
-                    rebedo: new Array(14+2),
-                    viriditas: new Array(14+2),
-                    citrini: new Array(14+2)
+                    rebedo: new Array(14 + 2), // maxAddDuctilityCount와 동일하게 바꿔줄것
+                    viriditas: new Array(14 + 2), // maxAddDuctilityCount와 동일하게 바꿔줄것
+                    citrini: new Array(14 + 2) // maxAddDuctilityCount와 동일하게 바꿔줄것
                 },
                 selectWisePerson: null,
                 beforeSelectWisePerson: null,
@@ -93,20 +94,20 @@ export default {
         inputCountOk() {
             this.inputDisabled = true;
             this.list = []
-            for(let i = this.inputCount; i>-2; i--) {
+            for(let i = this.inputCount; i>-this.maxAddDuctilityCount; i--) {
                 this.list.push(i);
             }
 
             this.elixirDto = {
                 wisePersons: {
-                    rebedo: new Array(this.inputCount+2),
-                    viriditas: new Array(this.inputCount+2),
-                    citrini: new Array(this.inputCount+2),
+                    rebedo: new Array(this.inputCount+this.maxAddDuctilityCount),
+                    viriditas: new Array(this.inputCount+this.maxAddDuctilityCount),
+                    citrini: new Array(this.inputCount+this.maxAddDuctilityCount),
                 },
-                 selectWisePerson: null,
+                selectWisePerson: null,
                 beforeSelectWisePerson: null,
                 ductilityCount: 0,
-                totalDuctilityCount: this.inputCount + 2,
+                totalDuctilityCount: this.inputCount + this.maxAddDuctilityCount,
             }
             
         },
@@ -114,7 +115,7 @@ export default {
             this.inputDisabled = false;
             this.inputCount = 14;
             this.list = []
-            for(let i = this.inputCount; i>-2; i--) {
+            for(let i = this.inputCount; i>-this.maxAddDuctilityCount; i--) {
                 this.list.push(i);
             }
         },
