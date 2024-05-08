@@ -140,7 +140,7 @@ export default {
                 this.elixirDto.selectWisePerson = wisePersonName;
 
                 if(this.undoClickedCount > 0) {
-                    this.elixirDto.recordWisePersons.length = this.elixirDto.ductilityCount;
+                    this.elixirDto.recordWisePersons.length = this.elixirDto.ductilityCount + 1;
                 }
 
                 this.axios.post(this.HOST+"/select", this.elixirDto)
