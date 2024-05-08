@@ -4,8 +4,8 @@
             <div style="width: 200px; margin-left: 30px;">
                 <div style="margin-bottom: 5px;">전체 연성 횟수 입력</div>
                 <div style="margin-bottom: 5px;">
-                    <input type="number" style="width: 80px; margin-right: 10px;" v-model="inputCount" v-bind:disabled="inputDisabled">
-                    <button type="button" class="btn btn-primary" @click="inputCountOk()">확인</button>
+                    <input type="number" style="width: 80px; margin-right: 10px;" v-model="inputCount" v-bind:disabled="isInputDisabled">
+                    <button type="button" class="btn btn-primary" @click="inputCountOk()">시작</button>
                 </div>
                 <div style="text-align: center;">
                     <button type="button" class="btn btn-primary" @click="resetElixir()">초기화</button>
@@ -64,6 +64,11 @@
             </div>
         </div>
 
+        <div style="margin-top: 807px;">
+            <button type="button" class="btn btn-primary" style="width: 40px; margin-right: 5px;" @click="undoClicked()" v-bind:disabled="isUndoButtonDisabled"><i class="bi bi-arrow-90deg-left"></i></button>
+            <button type="button" class="btn btn-primary" style="width: 40px;" @click="redoClicked()" v-bind:disabled="isRedoButtonDisabled"><i class="bi bi-arrow-90deg-right"></i></button>
+        </div>
+
     </div>
 </template>
   
@@ -76,7 +81,7 @@ export default {
             maxAddDuctilityCount: 2,
             inputCount: 14,
             list: [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1],
-            inputDisabled: false,
+            isInputDisabled: false,
             elixirDto: {
                 wisePersons: {
                     rebedo: new Array(14 + 2), // maxAddDuctilityCount와 동일하게 바꿔줄것
@@ -87,12 +92,17 @@ export default {
                 beforeSelectWisePerson: null,
                 ductilityCount: 0,
                 totalDuctilityCount: 0,
+                recordWisePersons: null,
             },
+            isUndoButtonDisabled: true,
+            isRedoButtonDisabled: true,
+            undoClickedCount: 0,
+            redoClickedCount: 0,
         };
     },
     methods: {
         inputCountOk() {
-            this.inputDisabled = true;
+            this.isInputDisabled = true;
             this.list = []
             for(let i = this.inputCount; i>-this.maxAddDuctilityCount; i--) {
                 this.list.push(i);
@@ -108,11 +118,17 @@ export default {
                 beforeSelectWisePerson: null,
                 ductilityCount: 0,
                 totalDuctilityCount: this.inputCount + this.maxAddDuctilityCount,
+                recordWisePersons: [{empty: {empty: []}}]
             }
+
+            this.isUndoButtonDisabled = true;
+            this.isRedoButtonDisabled = true;
+            this.undoClickedCount = 0;
+            this.redoClickedCount = 0;
             
         },
         resetElixir() {
-            this.inputDisabled = false;
+            this.isInputDisabled = false;
             this.inputCount = 14;
             this.list = []
             for(let i = this.inputCount; i>-this.maxAddDuctilityCount; i--) {
@@ -120,22 +136,59 @@ export default {
             }
         },
         selectWisePerson(wisePersonName){
-            if(this.inputDisabled) {
+            if(this.isInputDisabled) {
+
                 this.elixirDto.beforeSelectWisePerson = this.elixirDto.selectWisePerson;
                 this.elixirDto.selectWisePerson = wisePersonName;
+
+                if(this.undoClickedCount > 0) {
+                    this.elixirDto.recordWisePersons.length = this.elixirDto.ductilityCount;
+                }
 
                 this.axios.post(this.HOST+"/select", this.elixirDto)
                 .then(response => {
                     this.elixirDto = response.data;
+
+                    if(this.elixirDto.ductilityCount > 0) {
+                        this.isUndoButtonDisabled = false;
+                    } else {
+                        this.isUndoButtonDisabled = true;
+                    }
+                    this.isRedoButtonDisabled = true;
+                    this.undoClickedCount = 0;
+                    this.redoClickedCount = 0;
                 })
                 .catch(error => {
                     console.log(error);
                 });
             } else {
-                alert("연성 횟수 입력 후 확인 버튼을 눌러주세요");
+                alert("연성 횟수 입력 후 시작 버튼을 눌러주세요");
             }
         },
-        
+        undoClicked(){
+            this.undoClickedCount = this.undoClickedCount+1;
+            this.elixirDto.ductilityCount = this.elixirDto.ductilityCount - 1;
+            if(this.elixirDto.ductilityCount == 0) {
+               this.inputCountOk();
+            } else {
+                this.elixirDto.selectWisePerson = Object.keys(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount])[0];
+                this.elixirDto.wisePersons = this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount][this.elixirDto.selectWisePerson];
+                this.isRedoButtonDisabled = false;
+            }
+            
+
+        },
+        redoClicked() {
+            this.redoClickedCount = this.redoClickedCount+1;
+            if(this.undoClickedCount == this.redoClickedCount) {
+                this.isRedoButtonDisabled = true;
+            }
+            this.elixirDto.ductilityCount = this.elixirDto.ductilityCount + 1;
+           
+            this.elixirDto.selectWisePerson = Object.keys(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount])[0];
+            this.elixirDto.wisePersons = this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount][this.elixirDto.selectWisePerson];
+
+        },
     },
     
   }
