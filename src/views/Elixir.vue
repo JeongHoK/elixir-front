@@ -15,7 +15,7 @@
                 <table class="table table-bordered table-custom">
                     <tbody>
                         <tr v-for="(i, index) in list" v-bind:key="index">
-                            <td :class="{'bg-custom' : index === this.elixirDto.ductilityCount
+                            <td :class="{'bg-custom' : index === elixirDto.ductilityCount
                         , 'border-ductility-custom' : list.length - 5  > index
                         , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                         </tr>
@@ -31,7 +31,7 @@
                     <tr v-for="(i, index) in elixirDto.wisePersons.rebedo" v-bind:key="index">
                         <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'rebedo'
                         , 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'rebedo'
-                        , 'bg-custom' : index === this.elixirDto.ductilityCount
+                        , 'bg-custom' : index === elixirDto.ductilityCount
                         , 'border-ductility-custom' : list.length - 5  > index
                         , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                     </tr>
@@ -49,7 +49,7 @@
                     <tr v-for="(i, index) in elixirDto.wisePersons.viriditas" v-bind:key="index">
                         <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'viriditas'
                         , 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'viriditas'
-                        , 'bg-custom' : index === this.elixirDto.ductilityCount
+                        , 'bg-custom' : index === elixirDto.ductilityCount
                         , 'border-ductility-custom' : list.length - 5  > index
                         , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                     </tr>
@@ -67,7 +67,7 @@
                     <tr v-for="(i, index) in elixirDto.wisePersons.citrini" v-bind:key="index">
                         <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'citrini'
                          , 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'citrini'
-                         , 'bg-custom' : index === this.elixirDto.ductilityCount
+                         , 'bg-custom' : index === elixirDto.ductilityCount
                         , 'border-ductility-custom' : list.length - 5  > index
                         , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                     </tr>
