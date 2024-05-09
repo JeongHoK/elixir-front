@@ -21,6 +21,8 @@
                         </tr>
                     </tbody>
                 </table>
+                <button type="button" class="btn btn-primary" style="width: 40px; margin-right: 5px;" @click="undoClicked()" v-bind:disabled="isUndoButtonDisabled"><i class="bi bi-arrow-90deg-left"></i></button>
+                <button type="button" class="btn btn-primary" style="width: 40px;" @click="redoClicked()" v-bind:disabled="isRedoButtonDisabled"><i class="bi bi-arrow-90deg-right"></i></button>
             </div>
         </div>
 
@@ -29,9 +31,9 @@
             <table class="table table-bordered table-custom">
                 <tbody>
                     <tr v-for="(i, index) in elixirDto.wisePersons.rebedo" v-bind:key="index">
-                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'rebedo'
+                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'rebedo' && elixirDto.ductilityCount < index
                         , 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'rebedo'
-                        , 'bg-custom' : index === elixirDto.ductilityCount
+                        , 'bg-custom' : index === elixirDto.ductilityCount && elixirDto.selectWisePerson === 'rebedo'
                         , 'border-ductility-custom' : list.length - 5  > index
                         , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                     </tr>
@@ -47,9 +49,9 @@
             <table class="table table-bordered table-custom">
                 <tbody>
                     <tr v-for="(i, index) in elixirDto.wisePersons.viriditas" v-bind:key="index">
-                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'viriditas'
+                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'viriditas' && elixirDto.ductilityCount < index
                         , 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'viriditas'
-                        , 'bg-custom' : index === elixirDto.ductilityCount
+                        , 'bg-custom' : index === elixirDto.ductilityCount && elixirDto.selectWisePerson === 'viriditas'
                         , 'border-ductility-custom' : list.length - 5  > index
                         , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                     </tr>
@@ -65,9 +67,9 @@
             <table class="table table-bordered table-custom">
                 <tbody>
                     <tr v-for="(i, index) in elixirDto.wisePersons.citrini" v-bind:key="index">
-                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'citrini'
+                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'citrini' && elixirDto.ductilityCount < index
                          , 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'citrini'
-                         , 'bg-custom' : index === elixirDto.ductilityCount
+                         , 'bg-custom' : index === elixirDto.ductilityCount && elixirDto.selectWisePerson === 'citrini'
                         , 'border-ductility-custom' : list.length - 5  > index
                         , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                     </tr>
@@ -76,11 +78,6 @@
             <div style="text-align: center;">
                 <button type="button" class="btn btn-primary" style="width: 80px;" @click="selectWisePerson('citrini')" v-bind:disabled="isSelectDisabled">선택</button>
             </div>
-        </div>
-
-        <div style="margin-top: 797px;">
-            <button type="button" class="btn btn-primary" style="width: 40px; margin-right: 5px;" @click="undoClicked()" v-bind:disabled="isUndoButtonDisabled"><i class="bi bi-arrow-90deg-left"></i></button>
-            <button type="button" class="btn btn-primary" style="width: 40px;" @click="redoClicked()" v-bind:disabled="isRedoButtonDisabled"><i class="bi bi-arrow-90deg-right"></i></button>
         </div>
 
     </div>
