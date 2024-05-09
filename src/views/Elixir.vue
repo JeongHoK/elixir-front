@@ -5,12 +5,13 @@
                 <div style="margin-bottom: 5px;">총 연성 횟수
                     <input type="number" style="width: 50px; margin-right: 10px;" v-model="inputCount" v-bind:disabled="isInputDisabled">
                 </div>
-                <div style="height: 80px;">
+                <div style="height: 52px;">
                     <button type="button" class="btn btn-primary" style="margin-right: 5px;" @click="resetElixir()">초기화</button>
                     <button type="button" class="btn btn-primary" @click="elixirStart()">시작</button>
                 </div>
             </div>
             <div style="text-align: center;">
+                <span>남은 연성 횟수</span>
                 <table class="table table-bordered table-custom">
                     <tbody>
                         <tr v-for="(i, index) in list" v-bind:key="index">
@@ -31,7 +32,7 @@
                 </tbody>
             </table>
             <div style="text-align: center;">
-                <button type="button" class="btn btn-primary" style="width: 80px;" @click="selectWisePerson('rebedo')">선택</button>
+                <button type="button" class="btn btn-primary" style="width: 80px;" @click="selectWisePerson('rebedo')" v-bind:disabled="isSelectDisabled">선택</button>
             </div>
         </div>
 
@@ -45,7 +46,7 @@
                 </tbody>
             </table>
             <div style="text-align: center;">
-                <button type="button" class="btn btn-primary" style="width: 80px;" @click="selectWisePerson('viriditas')">선택</button>
+                <button type="button" class="btn btn-primary" style="width: 80px;" @click="selectWisePerson('viriditas')" v-bind:disabled="isSelectDisabled">선택</button>
             </div>
         </div>
     
@@ -59,11 +60,11 @@
                 </tbody>
             </table>
             <div style="text-align: center;">
-                <button type="button" class="btn btn-primary" style="width: 80px;" @click="selectWisePerson('citrini')">선택</button>
+                <button type="button" class="btn btn-primary" style="width: 80px;" @click="selectWisePerson('citrini')" v-bind:disabled="isSelectDisabled">선택</button>
             </div>
         </div>
 
-        <div style="margin-top: 807px;">
+        <div style="margin-top: 797px;">
             <button type="button" class="btn btn-primary" style="width: 40px; margin-right: 5px;" @click="undoClicked()" v-bind:disabled="isUndoButtonDisabled"><i class="bi bi-arrow-90deg-left"></i></button>
             <button type="button" class="btn btn-primary" style="width: 40px;" @click="redoClicked()" v-bind:disabled="isRedoButtonDisabled"><i class="bi bi-arrow-90deg-right"></i></button>
         </div>
@@ -97,6 +98,7 @@ export default {
             isRedoButtonDisabled: true,
             undoClickedCount: 0,
             redoClickedCount: 0,
+            isSelectDisabled: false,
         };
     },
     methods: {
@@ -122,6 +124,7 @@ export default {
 
             this.isUndoButtonDisabled = true;
             this.isRedoButtonDisabled = true;
+            this.isSelectDisabled = false;
             this.undoClickedCount = 0;
             this.redoClickedCount = 0;
             
@@ -143,6 +146,10 @@ export default {
                     this.elixirDto.recordWisePersons.length = this.elixirDto.ductilityCount + 1;
                 }
 
+                if(this.elixirDto.totalDuctilityCount - 2 == this.elixirDto.ductilityCount) {
+                    this.isSelectDisabled = true;
+                }
+
                 this.axios.post(this.HOST+"/select", this.elixirDto)
                 .then(response => {
                     this.elixirDto = response.data;
@@ -155,6 +162,7 @@ export default {
                     this.isRedoButtonDisabled = true;
                     this.undoClickedCount = 0;
                     this.redoClickedCount = 0;
+                    
                 })
                 .catch(error => {
                     console.log(error);
@@ -172,6 +180,7 @@ export default {
                 this.elixirDto.selectWisePerson = Object.keys(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount])[0];
                 this.elixirDto.wisePersons = this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount][this.elixirDto.selectWisePerson];
                 this.isRedoButtonDisabled = false;
+                this.isSelectDisabled = false;
             }
             
 
@@ -181,10 +190,17 @@ export default {
             if(this.undoClickedCount == this.redoClickedCount) {
                 this.isRedoButtonDisabled = true;
             }
+
+            if(this.elixirDto.totalDuctilityCount - 2 == this.elixirDto.ductilityCount) {
+                this.isSelectDisabled = true;
+            }
+
             this.elixirDto.ductilityCount = this.elixirDto.ductilityCount + 1;
            
             this.elixirDto.selectWisePerson = Object.keys(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount])[0];
             this.elixirDto.wisePersons = this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount][this.elixirDto.selectWisePerson];
+
+            
 
         },
     },
