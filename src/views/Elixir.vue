@@ -15,7 +15,9 @@
                 <table class="table table-bordered table-custom">
                     <tbody>
                         <tr v-for="(i, index) in list" v-bind:key="index">
-                            <td :class="{'bg-custom' : index === this.elixirDto.ductilityCount }">{{ i }}</td>
+                            <td :class="{'bg-custom' : index === this.elixirDto.ductilityCount
+                        , 'border-ductility-custom' : list.length - 5  > index
+                        , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -27,7 +29,11 @@
             <table class="table table-bordered table-custom">
                 <tbody>
                     <tr v-for="(i, index) in elixirDto.wisePersons.rebedo" v-bind:key="index">
-                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'rebedo', 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'rebedo', 'bg-custom' : index === this.elixirDto.ductilityCount}">{{ i }}</td>
+                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'rebedo'
+                        , 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'rebedo'
+                        , 'bg-custom' : index === this.elixirDto.ductilityCount
+                        , 'border-ductility-custom' : list.length - 5  > index
+                        , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -41,7 +47,11 @@
             <table class="table table-bordered table-custom">
                 <tbody>
                     <tr v-for="(i, index) in elixirDto.wisePersons.viriditas" v-bind:key="index">
-                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'viriditas', 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'viriditas', 'bg-custom' : index === this.elixirDto.ductilityCount}">{{ i }}</td>
+                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'viriditas'
+                        , 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'viriditas'
+                        , 'bg-custom' : index === this.elixirDto.ductilityCount
+                        , 'border-ductility-custom' : list.length - 5  > index
+                        , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -55,7 +65,11 @@
             <table class="table table-bordered table-custom">
                 <tbody>
                     <tr v-for="(i, index) in elixirDto.wisePersons.citrini" v-bind:key="index">
-                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'citrini', 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'citrini', 'bg-custom' : index === this.elixirDto.ductilityCount}">{{ i }}</td>
+                        <td :class="{'bg-order-custom' : i === 3 && elixirDto.selectWisePerson === 'citrini'
+                         , 'bg-chaos-custom' : i === 6 && elixirDto.selectWisePerson !== 'citrini'
+                         , 'bg-custom' : index === this.elixirDto.ductilityCount
+                        , 'border-ductility-custom' : list.length - 5  > index
+                        , 'border-seal-ductility-custom' : list.length - 5 <= index && list.length - 2 > index}">{{ i }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -218,5 +232,8 @@ export default {
   .table-custom .bg-order-custom { background-color: rgba(0, 117, 250, 0.247); }
 
   .table-custom .bg-chaos-custom { background-color: rgba(233, 186, 240, 0.712); }
+
+  .table-custom .border-ductility-custom { border: 1px solid #212529; }
+  .table-custom .border-seal-ductility-custom { border: 2px solid #8577ff; }
   </style>
   
