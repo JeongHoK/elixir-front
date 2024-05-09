@@ -27,7 +27,7 @@
         </div>
 
         <div>
-            <div style="width: 100px; height: 110px;">rebedo</div>
+            <div style="width: 100px; height: 110px;"><img style="width: 90%; height: 90%;" src="@/assets/rebedo.png"></div>
             <table class="table table-bordered table-custom">
                 <tbody>
                     <tr v-for="(i, index) in elixirDto.wisePersons.rebedo" v-bind:key="index">
@@ -45,7 +45,7 @@
         </div>
 
         <div>
-            <div style="width: 100px; height: 110px;">viriditas</div>
+            <div style="width: 100px; height: 110px;"><img style="width: 90%; height: 90%;" src="@/assets/viriditas.png"></div>
             <table class="table table-bordered table-custom">
                 <tbody>
                     <tr v-for="(i, index) in elixirDto.wisePersons.viriditas" v-bind:key="index">
@@ -63,7 +63,7 @@
         </div>
     
         <div>
-            <div style="width: 100px; height: 110px;">citrini</div>
+            <div style="width: 100px; height: 110px;"><img style="width: 90%; height: 90%;" src="@/assets/citrini.png"></div>
             <table class="table table-bordered table-custom">
                 <tbody>
                     <tr v-for="(i, index) in elixirDto.wisePersons.citrini" v-bind:key="index">
