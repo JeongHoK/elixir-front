@@ -264,7 +264,6 @@ export default {
             } else {
                 const key = Object.keys(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount])[0];
                 const selectKind = Object.keys(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount + 1])[0].split("-")[0];
-                console.log("undo", selectKind);
                 if(selectKind === 'nonCountSelect') {
                     this.plusMinusDuctilityCount--;
                     this.list.splice(this.elixirDto.ductilityCount + 1, 1);
@@ -294,7 +293,6 @@ export default {
 
             const key = Object.keys(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount])[0];
             const selectKind = Object.keys(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount])[0].split("-")[0];
-            console.log("redo", selectKind);
             if(selectKind === 'nonCountSelect') {
                 this.plusMinusDuctilityCount++;
                 this.list.splice(this.elixirDto.ductilityCount, 0, this.list[this.elixirDto.ductilityCount - 1]);
