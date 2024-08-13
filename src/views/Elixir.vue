@@ -274,7 +274,7 @@ export default {
                     this.list.splice(this.elixirDto.ductilityCount + 1, 0, this.list[this.elixirDto.ductilityCount] - 1);
                 }
                 this.elixirDto.selectWisePerson = key.split("-")[1];
-                this.elixirDto.wisePersons = this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount][key];
+                this.elixirDto.wisePersons = JSON.parse(JSON.stringify(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount][key]));
                 this.isRedoButtonDisabled = false;
                 this.isSelectDisabled = false;
             }
@@ -304,7 +304,7 @@ export default {
                 this.list.splice(this.elixirDto.ductilityCount, 1);
             } 
             this.elixirDto.selectWisePerson = key.split("-")[1];
-            this.elixirDto.wisePersons = this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount][key];
+            this.elixirDto.wisePersons = JSON.parse(JSON.stringify(this.elixirDto.recordWisePersons[this.elixirDto.ductilityCount][key]));
         },
     },
     
